@@ -1,14 +1,16 @@
 <template>
-  <span class="navbar-text">
+  <div class="account-panel-wrapper">
+  <span class="navbar-text text-center">
     <button class="btn selectable text-success lighten-30 text-uppercase my-2 my-lg-0" @click="login"
       v-if="!user.isAuthenticated">
       Login
     </button>
     <div v-else>
+      <p class="text-center account-heading">Your Account</p>
       <div class="dropdown my-2 my-lg-0">
-        <div type="button" class="bg-dark border-0 selectable no-select" data-bs-toggle="dropdown" aria-expanded="false">
+        <div type="button" class=" d-flex border-0 selectable no-select justify-content-center" data-bs-toggle="dropdown" aria-expanded="false">
           <div v-if="account.picture || user.picture">
-            <img :src="account.picture || user.picture" alt="account photo" height="40" class="rounded" />
+            <img :src="account.picture || user.picture" alt="account photo" height="40" class="profile-image text-center" />
           </div>
         </div>
         <div class="dropdown-menu dropdown-menu-lg-end dropdown-menu-start p-0" aria-labelledby="authDropdown">
@@ -25,8 +27,10 @@
           </div>
         </div>
       </div>
+      <button class="mt-3"><b>Create Event <i class="mdi mdi-plus"></i></b></button>
     </div>
   </span>
+  </div>
 </template>
 
 <script>
@@ -49,4 +53,17 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.profile-image {
+  aspect-ratio: 1/1;
+  height: 10vh;
+  border-radius: 8px;;
+}
+
+.account-heading {
+  color: #CCF3FD;
+}
+.account-panel-wrapper {
+  margin-top: 10vh;
+}
+</style>

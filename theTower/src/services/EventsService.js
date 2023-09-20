@@ -52,9 +52,9 @@ class EventsService {
     if (!eventCancel) {
       throw new BadRequest('There was no event with the requested ID:' + eventId)
     }
-    // if (!eventCancel.creatorId != accountId) {
-    //   throw new Forbidden('You are not the creator of this event!')
-    // } 
+    if (eventCancel.creatorId != accountId) {
+      throw new Forbidden('You are not the creator of this event!')
+    }
     // This breaks the postman, because the creator ID does not match the accountId passed by postman....
     eventCancel.isCanceled = !eventCancel.isCanceled
     await eventCancel.save()
