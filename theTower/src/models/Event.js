@@ -12,3 +12,10 @@ export const EventSchema = new Schema({
   type: { type: String, enum: ['concert', 'convention', 'sport', 'digital'], required: true }
 },
   { timestamps: true, toJSON: { virtuals: true } })
+
+EventSchema.virtual('ticketCount', {
+  localField: '_id',
+  foreignField: 'eventId',
+  ref: 'Ticket',
+  count: true
+})

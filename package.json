@@ -1,13 +1,14 @@
-
-  {
+{
     "name": "thetower",
     "version": "1.0.0",
     "scripts": {
-      "build": "npm run setup:server",
-      "setup:app": "npm run setup:server && npm run setup:client",
-      "setup:client": "cd theTower.client && npm i",
-      "setup:server": "cd theTower && npm i",
-      "start": "node theTower/index.js"
+        "build": "npm run setup:server",
+        "setup:app": "npm run setup:server && npm run setup:client",
+        "setup:client": "cd theTower.client && npm i",
+        "setup:server": "cd theTower && npm i",
+        "start": "node theTower/index.js"
+    },
+    "dependencies": {
+        "mongoose": "^7.5.2"
     }
-  }
-  
+}
