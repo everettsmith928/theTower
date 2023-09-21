@@ -27,7 +27,7 @@
           </div>
         </div>
       </div>
-      <button class="mt-3"><b>Create Event <i class="mdi mdi-plus"></i></b></button>
+      <button class="mt-3" data-bs-toggle="modal" data-bs-target="#createModal"><b>Create Event <i class="mdi mdi-plus"></i></b></button>
     </div>
   </span>
   </div>

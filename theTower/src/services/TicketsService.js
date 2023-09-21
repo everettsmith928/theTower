@@ -13,7 +13,7 @@ class TicketsService {
 
   async getTicketsByAccount(accountId) {
     logger.log(accountId)
-    const tickets = await dbContext.Tickets.find({ accountId: accountId }).populate('event profile')
+    const tickets = await await dbContext.Tickets.find({ accountId: accountId }).sort('-createdAt').populate('event profile')
     return tickets
   }
 

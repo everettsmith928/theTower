@@ -20,6 +20,25 @@
    <footer class="text-light">
    
   </footer>
+
+  <!-- Modal -->
+  <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title fs-5" id="exampleModalLabel">Create New Event</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+         <CreateEventForm />
+         
+        </div>
+        <div class="modal-footer">
+          
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -74,6 +93,7 @@ button {
   padding: .5rem;
   margin: .5rem;
   transition: .5s;
+  border: 0px;
 }
 
 button:hover {

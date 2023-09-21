@@ -1,5 +1,10 @@
 <template>
-  <div class="event-card d-flex text-center rounded justify-content-center bg-light selectable" :style="`background-image: url(${ticket.event.coverImg})`">
+  <router-link :to="{ path: `events/${ticket.event.id}` }">
+  <div v-if="ticket.event.isCanceled" class="event-card text-center rounded justify-content-center bg-light selectable" :style="`background-image: url(${ticket.event.coverImg})`">
+    <h1 class="cancel-text bg-dark">Event was Canceled</h1>
+    <h3 class="cancel-text bg-dark">{{ ticket.event.name }}</h3>
+  </div>
+  <div v-else class="event-card d-flex text-center rounded justify-content-center bg-light selectable" :style="`background-image: url(${ticket.event.coverImg})`">
       <div class="card-text align-items-center">
       <h3 class="event-title p-3">{{ ticket.event.name }}</h3>
       <h3 class="event-title p-3">{{ new Date(ticket.event.startDate).toDateString() }}</h3>
@@ -8,8 +13,10 @@
     <p class="event-title align-self-end">{{ event.ticketCount }}</p>   --> 
     </div>  
     </div>
-     <button @click="deleteTicket(ticket.id)" class="">Delete</button>   
-    
+    </router-link>
+    <button v-if="ticket.event.isCanceled" @click="deleteTicket(ticket.id)" class="refund-button"><b>Refund</b></button>  
+     <button v-else @click="deleteTicket(ticket.id)" class=""><b>Unattend</b></button>   
+  
 </template>
 
 
@@ -48,11 +55,22 @@ export default {
 }
 
 .card-text {
-  backdrop-filter: blur(5px);
   overflow-y: hidden;
 }
 
 .event-title {
   background-color: #484c63;
+}
+
+.cancel-text {
+  color: rgb(255, 188, 188);
+}
+
+.refund-button {
+  background-color: rgb(161, 220, 161);
+}
+
+.refund-button:hover {
+  background-color: greenyellow;
 }
 </style>

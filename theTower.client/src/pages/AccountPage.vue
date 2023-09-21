@@ -38,7 +38,7 @@ export default {
     return {
       Ticket,
       account: computed(() => AppState.account),
-      tickets: computed(() => AppState.tickets)
+      tickets: computed(() => AppState.profileTickets)
     }
   }
 }

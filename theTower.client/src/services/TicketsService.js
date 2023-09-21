@@ -8,14 +8,16 @@ class TicketsService {
   async deleteTicket(ticketId){
     let res = await api.delete(`api/tickets/${ticketId}`)
     logger.log('You deleted your ticket!'+ res.data)
-    let foundTicket = AppState.tickets.findIndex(ticket => ticketId == ticket.id)
+    let foundTicket = AppState.profileTickets.findIndex(ticket => ticketId == ticket.id)
     // let indexOfTicket = foundTicket.indexOf()
-    AppState.tickets.splice(foundTicket, 1)
+    AppState.profileTickets.splice(foundTicket, 1)
   }
 
   async createTicket(eventId) {
     let res = await api.post(`api/tickets`, {eventId: eventId})
     logger.log(res.data)
+    let newTicket = new Ticket(res.data)
+    AppState.tickets.push(newTicket)
     Pop.success('You bought a ticket!')
   }
 

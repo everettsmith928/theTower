@@ -1,8 +1,19 @@
 <template>
   <router-link :to="{ path:`events/${event.id}`}">
-  <div class="event-card d-flex text-center rounded justify-content-center bg-light selectable" :style="`background-image: url(${event.coverImg})`">
+    <div v-if="event.isCanceled" class="event-card selectable event-banner p-0 text-center" :style="`background-image: url(${event.coverImg})`">
+        <div class="card-text event-cancel align-items-center justify-content-center">
+          <div>
+            <h2 class="event-title event-title-cancel bg-dark">{{ event.name }}</h2>
+          </div>
+          <div>
+            <h2 class="event-title event-title-cancel bg-dark">Event was canceled</h2>
+          </div>
+        </div>
+      </div>
+  <div v-else class="event-card d-flex text-center rounded justify-content-center bg-light selectable" :style="`background-image: url(${event.coverImg})`">
     <div class="card-text align-items-center">
     <h3 class="event-title p-3">{{ event.name }}</h3>
+     <h3 class="event-title p-3">{{ event.startDate.toLocaleDateString() }}</h3>
     <!-- <p class="event-title align-self-end">{{event.id}}</p>    
     <p class="event-title align-self-end">{{ event.location }}</p>    
     <p class="event-title align-self-end">{{ event.ticketCount }}</p>   -->
@@ -39,12 +50,21 @@ export default {
 }
 
 .card-text {
-  backdrop-filter: blur(5px);
   overflow-y: hidden;
 }
 
 .event-title {
   background-color: #484c63;
+}
+
+.event-cancel {
+  width: 100%;
+  height: 100%;
+  backdrop-filter: sepia(100%);
+}
+
+.event-title-cancel {
+  color: rgb(255, 188, 188);
 }
 
 </style>

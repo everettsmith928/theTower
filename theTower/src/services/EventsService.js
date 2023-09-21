@@ -5,12 +5,13 @@ import { logger } from "../utils/Logger.js"
 
 class EventsService {
   async createEvent(eventData) {
-    let event = (await dbContext.Events.create(eventData)).populate('ticketCount')
+    let event = await dbContext.Events.create(eventData)
+    await event.populate('ticketCount')
     return event
   }
 
   async getEvents() {
-    let events = await dbContext.Events.find().populate('ticketCount')
+    let events = await await dbContext.Events.find().sort('-createdAt').populate('ticketCount')
     return events
   }
 
