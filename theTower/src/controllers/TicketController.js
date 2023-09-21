@@ -1,6 +1,7 @@
 import { Auth0Provider } from "@bcwdev/auth0provider"
 import { ticketsService } from "../services/TicketsService.js"
 import BaseController from "../utils/BaseController.js"
+import { logger } from "../utils/Logger.js"
 
 export class TicketController extends BaseController {
   constructor() {
@@ -14,6 +15,7 @@ export class TicketController extends BaseController {
 
   async createTicket(req, res, next) {
     try {
+      logger.log(req)
       let ticketBody = req.body
       ticketBody.accountId = req.userInfo.id
       let ticket = await ticketsService.createTicket(ticketBody)

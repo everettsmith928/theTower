@@ -6,37 +6,37 @@
     </div>
   </section>
   <section class="row m-3 elevation-3 text-center nav-links justify-content-between align-items-center">
-      <div class="nav-text-wrapper col-12 col-md-1 selectable p-3">
+      <div @click="filterBy = ''" class="nav-text-wrapper col-12 col-md-1 selectable p-3">
           <div class="text-center nav-button">
           <h3 class="nav-text">All</h3>
           </div>
       </div>
-      <div class="nav-text-wrapper col-12 col-md-1 selectable p-3">
+      <div @click="filterBy = 'expositions'" class="nav-text-wrapper col-12 col-md-1 selectable p-3">
           <div class="text-center nav-button">
           <h3 class="nav-text">Expos</h3>
           </div>
       </div>
-      <div class="nav-text-wrapper col-12 col-md-1 selectable p-3">
+      <div @click="filterBy = 'convention'" class="nav-text-wrapper col-12 col-md-1 selectable p-3">
           <div class="text-center nav-button">
           <h3 class="nav-text">Conventions</h3>
           </div>
         </div>
-        <div class="nav-text-wrapper col-12 col-md-1 selectable p-3">
+        <div @click="filterBy = 'exhibits'" class="nav-text-wrapper col-12 col-md-1 selectable p-3">
           <div class="text-center nav-button">
           <h3 class="nav-text">Exhibits</h3>
           </div>
         </div>
-        <div class="nav-text-wrapper col-12 col-md-1 selectable p-3">
+        <div @click="filterBy = 'sport'" class="nav-text-wrapper col-12 col-md-1 selectable p-3">
           <div class="text-center nav-button">
           <h3 class="nav-text">Sports</h3>
           </div>
         </div>
-        <div class="nav-text-wrapper col-12 col-md-1 selectable p-3">
+        <div @click="filterBy = 'digital'" class="nav-text-wrapper col-12 col-md-1 selectable p-3">
           <div class="text-center nav-button">
           <h3 class="nav-text">Digital</h3>
           </div>
         </div>
-        <div class="nav-text-wrapper col-12 col-md-1 selectable p-3">
+        <div @click="filterBy = 'concert'" class="nav-text-wrapper col-12 col-md-1 selectable p-3">
           <div class="text-center nav-button">
           <h3 class="nav-text">Concerts</h3>
           </div>
@@ -55,11 +55,12 @@
 <script>
 import Pop from "../utils/Pop";
 import {eventsService} from "../services/EventsService.js"
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { AppState} from "../AppState.js"
 
 export default {
   setup() {
+    const filterBy = ref('')
     onMounted(() => getEvents()) 
     async function getEvents() {
       try {
@@ -69,7 +70,15 @@ export default {
       }
     }
     return {
-      events: computed(()=> AppState.events)
+      filterBy,
+      events: computed(()=> {
+        // NOTE computeds can be multi-line but then need explicit returns
+        if (!filterBy.value) {
+          return AppState.events
+        } else {
+          return AppState.events.filter(event => event.type == filterBy.value)
+        }
+      }),
     }
   }
 }
@@ -119,6 +128,8 @@ export default {
     height:50vh;
     background-image: url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
     border: solid 2px #79E7AB;
+    background-size: cover;
+    background-position: center;
   }
 
   .splash-text{

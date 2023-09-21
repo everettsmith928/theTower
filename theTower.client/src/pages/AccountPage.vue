@@ -6,15 +6,39 @@
     <h1>My Events</h1>
     <h2>Upcoming Events</h2>
   </div>
+    <section v-if="tickets" class="row m-3">
+      <!-- <h1>{{ events[0] }}</h1> -->
+      <div v-for="ticket in tickets" :key="ticket.id" class="col-12 col-md-3 event-list g-3">
+          <TicketCard :ticket="ticket" />
+      </div>
+    </section>
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState';
+import Pop from "../utils/Pop";
+import { eventsService } from "../services/EventsService";
+import { logger } from "../utils/Logger";
+import { TowerEvent } from "../models/Event";
+import { Ticket} from "../models/Ticket.js"
 export default {
   setup() {
+    onMounted(() => {
+      getEventsByProfile()
+    })
+   
+    async function getEventsByProfile() {
+      try {
+        await eventsService.getEventsByProfile()
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
     return {
-      account: computed(() => AppState.account)
+      Ticket,
+      account: computed(() => AppState.account),
+      tickets: computed(() => AppState.tickets)
     }
   }
 }

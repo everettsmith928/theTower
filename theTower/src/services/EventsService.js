@@ -40,7 +40,6 @@ class EventsService {
     event.startDate = formBody.startDate != undefined ? formBody.startDate : event.startDate
     // event.isCanceled = formBody.isCanceled != undefined ? formBody.isCanceled : event.isCanceled CANNOT EDIT EVENTS TO A CANCEL WITHOUT USING ROUTE
     event.type = formBody.type != undefined ? formBody.type : event.type
-    //TODO need to add the Ticket count as a virtual to the object
     await event.save()
     logger.log(event)
 

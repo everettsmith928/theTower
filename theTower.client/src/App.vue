@@ -83,6 +83,9 @@ button:hover {
 h1 {
   color: #CCF3FD;
 }
+p {
+  color: #CCF3FD;
+}
 
 h2 {
   color:#79E7AB;

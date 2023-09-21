@@ -1,13 +1,14 @@
 <template>
+  <router-link :to="{ path:`events/${event.id}`}">
   <div class="event-card d-flex text-center rounded justify-content-center bg-light selectable" :style="`background-image: url(${event.coverImg})`">
     <div class="card-text align-items-center">
     <h3 class="event-title p-3">{{ event.name }}</h3>
-    <p class="event-title align-self-end">{{event.id}}</p>    
-    <p class="event-title align-self-end">Date</p>    
-    <p class="event-title align-self-end">Remaining Tickets</p>  
+    <!-- <p class="event-title align-self-end">{{event.id}}</p>    
+    <p class="event-title align-self-end">{{ event.location }}</p>    
+    <p class="event-title align-self-end">{{ event.ticketCount }}</p>   -->
     </div>  
   </div>
-  
+  </router-link>
 </template>
 
 
@@ -15,13 +16,15 @@
 import { AppState } from '../AppState';
 import { computed, reactive, onMounted } from 'vue';
 import { TowerEvent } from "../models/Event";
+import { RouterLink } from "vue-router";
 export default {
-  props: {event: {type: TowerEvent, required: true}},
-  setup(){
-  return { 
-    events: computed(() => AppState.events)
-   }
-  }
+    props: { event: { type: TowerEvent, required: true } },
+    setup() {
+        return {
+            events: computed(() => AppState.events)
+        };
+    },
+    components: { RouterLink }
 };
 </script>
 
