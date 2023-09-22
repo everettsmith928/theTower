@@ -1,10 +1,10 @@
 <template>
   <div class="about text-center">
-    <h1>Welcome Back, {{ account.name }}</h1>
-    <img class="rounded" :src="account.picture" alt="" />
-    <p>{{ account.email }}</p>
-    <h1>My Events</h1>
-    <h2>Upcoming Events</h2>
+    <h1 class="my-1">Welcome Back, {{ account.name }}</h1>
+    <!-- <img class="rounded" :src="account.picture" alt="" /> -->
+    <!-- <p>{{ account.email }}</p> -->
+    <!-- <h1>My Events</h1> -->
+    <h2 class="my-1">Your Upcoming Events</h2>
   </div>
     <section v-if="tickets" class="row m-3">
       <!-- <h1>{{ events[0] }}</h1> -->

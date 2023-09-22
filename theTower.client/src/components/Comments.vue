@@ -4,7 +4,7 @@
           <div class="col-12">
           <form @submit.prevent="createComment" class="row">
             <div class="col-12">
-              <textarea v-model="commentData.body" type="text" rows="3" class="form-control mt-3"></textarea>
+              <input v-model="commentData.body" type="text" rows="3" class="form-control mt-3">
             </div>
             <div class="col-12 d-flex align-items-center justify-content-end">
               <button type="submit" class="comment-button"><i class="mdi mdi-pen"></i></button>
@@ -46,6 +46,9 @@ export default {
                 Pop.error(error);
             }
         }
+        function resetForm() {
+          commentData.value = {}
+        } 
         return {
             userComments: computed(() => AppState.userComments),
             commentData,
@@ -54,6 +57,7 @@ export default {
                     commentData.value.eventId = route.params.eventId;
                     await commentsService.createComment(commentData.value);
                     logger.log('Comment Posted!');
+                    resetForm()
                 }
                 catch (error) {
                     Pop.error(error);

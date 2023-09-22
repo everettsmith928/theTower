@@ -22,18 +22,20 @@
           <p class="text-center">{{ event.description }}</p>
         </div>
         <div class="col-12">
-            <p class="text-center">{{ event.startDate.toLocaleDateString() }} at {{ event.startDate.toLocaleTimeString() }}</p>
+          <p class="text-center">Event Type: {{ event.type }}</p>
+        </div>
+        <div>
+          {{event.creator}}
+        </div>
+        <div class="col-12">
+            <p class="text-center event-date">{{ event.startDate.toLocaleDateString() }} at {{ event.startDate.toLocaleTimeString() }}</p>
         </div>
         <div class="col-12 text-center justify-content-center mb-3">
           <h2 class="text-center">{{ event.capacity - event.ticketCount }} Spots Remaining!</h2>
           <button v-if="isAttending" @click="deleteTicketFromDetailsPage(event.id)"><b>Unattend Event</b></button>  
             <button v-else-if="!isAttending && event.capacity > event.ticketCount && user.isAuthenticated" @click="createTicket(event.id)"><b>Attend Event</b></button>
             <div v-else-if="event.capacity == event.ticketCount"> <h2>Event is full</h2>  
-              </div>
-            
-            
-          
-         
+              </div> 
         </div> 
       </section>
         
@@ -63,11 +65,9 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-             <EditEventForm />
-         
+             <EditEventForm />       
             </div>
-            <div class="modal-footer">
-          
+            <div class="modal-footer">         
             </div>
           </div>
         </div>
@@ -88,7 +88,6 @@ export default {
     onMounted(() => {
       setActiveEvent(),
       getTicketsByEvent()
-      checkIfAvailable()
     })
     onUnmounted(() => {
       clearTickets(),
@@ -113,12 +112,7 @@ export default {
         Pop.error(error)
       }
     }
-    async function checkIfAvailable() {
-      logger.log(this.event.capacity, this.event.ticketCount)
-      if (this.event.capacity - this.event.ticketCount <= 0) {
-        AppState.eventFull = true
-      }
-    }
+    
   return { 
     event: computed(() => AppState.activeEvent),
     tickets: computed(() => AppState.tickets),
@@ -158,9 +152,6 @@ export default {
         Pop.error(error)
       }
     },
-
-    
-
    }
   }
 };
@@ -180,6 +171,9 @@ export default {
   height: 100%;
   width: 100%;
   background-size: cover;
+}
+.event-date {
+  font-size: 24px;
 }
 
 .event-cancel-text {

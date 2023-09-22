@@ -20,7 +20,7 @@ class CommentsService {
 
   async getCommentsByEvent(eventId) {
     logger.log('Getting all comments for event with ID:' + eventId)
-    const comments = await dbContext.Comments.find({ eventId: eventId }).populate('creator')
+    const comments = await dbContext.Comments.find({ eventId: eventId }).sort('-createdAt').populate('creator')
     return comments
   }
 

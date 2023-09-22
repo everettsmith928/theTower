@@ -7,7 +7,7 @@
     </button>
     <div v-else>
       <p class="text-center account-heading">Your Account</p>
-      <div class="dropdown my-2 my-lg-0">
+      <div class="dropdown my-lg-0">
         <div type="button" class=" d-flex border-0 selectable no-select justify-content-center" data-bs-toggle="dropdown" aria-expanded="false">
           <div v-if="account.picture || user.picture">
             <img :src="account.picture || user.picture" alt="account photo" height="40" class="profile-image text-center" />
@@ -63,7 +63,5 @@ export default {
 .account-heading {
   color: #CCF3FD;
 }
-.account-panel-wrapper {
-  margin-top: 10vh;
-}
+
 </style>

@@ -14,7 +14,7 @@ class CommentsService{
   async createComment(commentData) {
     let res = await api.post(`api/comments`, commentData)
     logger.log(res.data)
-    AppState.userComments.push(new userComment(res.data))
+    AppState.userComments.unshift(new userComment(res.data))
   }
 
   async deleteComment(commentId) {
