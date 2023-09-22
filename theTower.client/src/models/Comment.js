@@ -1,4 +1,4 @@
-export class Comment{
+export class userComment{
   constructor(data) {
     this.id = data.id
     this.creatorId = data.creatorId

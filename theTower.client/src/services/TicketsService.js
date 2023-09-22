@@ -13,6 +13,14 @@ class TicketsService {
     AppState.profileTickets.splice(foundTicket, 1)
   }
 
+  async deleteTicketFromDetailsPage(ticketId) {
+    let res = await api.delete(`api/tickets/${ticketId}`)
+    logger.log('You deleted your ticket!' + res.data)
+    let foundTicket = AppState.tickets.findIndex(ticket => ticketId == ticket.id)
+    // let indexOfTicket = foundTicket.indexOf()
+    AppState.tickets.splice(foundTicket, 1)
+  }
+
   async createTicket(eventId) {
     let res = await api.post(`api/tickets`, {eventId: eventId})
     logger.log(res.data)

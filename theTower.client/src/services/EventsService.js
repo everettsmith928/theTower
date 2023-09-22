@@ -48,6 +48,15 @@ class EventsService{
     let canceledEventIndex = AppState.events.findIndex(event => event.id == eventId )
     AppState.events.splice(canceledEventIndex, 1, new TowerEvent(res.data))
   }
+
+  async editEvent(eventId, eventData) {
+    logger.log('Editing your event...')
+    let eventIndex = AppState.events.findIndex(e => e.id == eventId)
+    let res = await api.put(`api/events/${eventId}`, eventData)
+    logger.log(res.data)
+    AppState.events.splice(eventIndex, 1 , new TowerEvent(res.data))
+    AppState.activeEvent = new TowerEvent(res.data)
+  }
 }
 
 export const eventsService = new EventsService()

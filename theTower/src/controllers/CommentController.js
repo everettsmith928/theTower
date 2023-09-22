@@ -11,6 +11,15 @@ export class CommentController extends BaseController {
       .delete('/:commentId', this.deleteComment)
   }
 
+  async getCommentsByEvent(req, res, next) {
+    try {
+      let comments = await commentsService.getCommentsByEvent()
+      res.send(comments)
+    } catch (error) {
+      next(error)
+    }
+  }
+
   async createComment(req, res, next) {
     try {
       let commentBody = req.body

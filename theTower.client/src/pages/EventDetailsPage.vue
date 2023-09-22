@@ -13,7 +13,7 @@
     <div v-else class="col-12 event-banner" :style="`background-image: url(${event.coverImg})`">
       <section class="row d-flex align-items-end banner-content">
         <div class="col-12 d-flex justify-content-end">
-          <button class="p-2"><i class="mdi mdi-pen"></i><b>Edit Event</b></button>
+          <button data-bs-toggle="modal" data-bs-target="#editModal" v-if="event.creatorId == account.id" class="p-2"><i class="mdi mdi-pen"></i><b>Edit Event</b></button>
         </div>
         <div class="col-12">
             <h1 class="text-center">{{ event.name }}</h1>
@@ -26,9 +26,14 @@
         </div>
         <div class="col-12 text-center justify-content-center mb-3">
           <h2 class="text-center">{{ event.capacity - event.ticketCount }} Spots Remaining!</h2>
-          <button @click="createTicket(event.id)"><b>Attend Event</b></button>
-        </div>
-        
+            <div v-if="!event.capacity == event.ticketCount"> <h2>Event is full</h2>  
+            </div>
+            <button v-else-if="!isAttending" @click="createTicket(event.id)"><b>Attend Event</b></button>
+            <button v-else @click="deleteTicketFromDetailsPage(event.id)"><b>Unattend Event</b></button>
+            
+          
+         
+        </div> 
       </section>
         
     </div>
@@ -47,6 +52,25 @@
     <h2 class="text-center">Comments</h2>
     <Comments/>
   </section>
+
+   <!-- THIS IS THE EDIT MODAL -->
+    <div v-if="activeEvent" class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title fs-5" id="exampleModalLabel">Edit Your Event</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+             <EditEventForm />
+         
+            </div>
+            <div class="modal-footer">
+          
+            </div>
+          </div>
+        </div>
+      </div>
 </template>
 
 
@@ -57,15 +81,18 @@ import { computed, reactive, onMounted, useAttrs, onUnmounted } from 'vue';
 import { eventsService } from "../services/EventsService";
 import Pop from "../utils/Pop";
 import { ticketsService } from "../services/TicketsService";
+import { logger } from "../utils/Logger";
 export default {
   setup(){
     onMounted(() => {
       setActiveEvent(),
       getTicketsByEvent()
+      checkIfAvailable()
     })
     onUnmounted(() => {
       clearTickets(),
-      clearActiveEvent()
+      clearActiveEvent(),
+      () => AppState.eventFull = false
     })
     async function clearTickets() {
       AppState.tickets = []
@@ -84,19 +111,41 @@ export default {
       } catch (error) {
         Pop.error(error)
       }
-      
+    }
+    async function checkIfAvailable() {
+      logger.log(this.event.capacity, this.event.ticketCount)
+      if (this.event.capacity - this.event.ticketCount <= 0) {
+        AppState.eventFull = true
+      }
     }
   return { 
     event: computed(() => AppState.activeEvent),
     tickets: computed(() => AppState.tickets),
     account: computed(() => AppState.account),
+    activeEvent: computed(() => AppState.activeEvent),
+    isAttending: computed(()=> AppState.tickets.find(ticket => ticket.accountId == AppState.account.id)),
+    eventFull: computed(() => AppState.eventFull),
+    user: computed(() => AppState.user),
     async createTicket(eventId) {
       try {
-        console.log(eventId)
+        logger.log(eventId)
         await ticketsService.createTicket(eventId)
+        this.event.capacity--
       } catch (error) {
         Pop.error(error)
       }
+    },
+
+    async deleteTicketFromDetailsPage() {
+        try {
+          if (await Pop.confirm(`Are you sure you want to unattend this event?`)) {
+            await ticketsService.deleteTicketFromDetailsPage(this.isAttending.id)
+            this.event.capacity++
+          }
+          Pop.toast(`You unattended the event!`)
+        } catch (error) {
+          Pop.error(error)
+        }
     },
 
     async cancelEvent() {
@@ -107,7 +156,9 @@ export default {
       } catch (error) {
         Pop.error(error)
       }
-    }
+    },
+
+    
 
    }
   }
