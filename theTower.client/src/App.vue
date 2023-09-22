@@ -5,7 +5,7 @@
   <main>
     <div class="container-fluid">
       <section class="row">
-        <div class="col-12 col-lg-11 order-last order-md-first">
+        <div class="col-12 col-lg-11 order-last order-md-first text-center">
           <RouterLink :to="{ name: 'Home' }"><h1 class="m-3"><i class="mdi mdi-castle"></i> TOWER</h1></RouterLink>
   <router-view />
         </div>

@@ -1,8 +1,8 @@
 <template>
   <section class="row m-3">
     <div class="col-12 splash-image">
-      <h2 class="m-5">Get ahead of the Scalpers</h2>
-      <p class="m-5 splash-text">Reserve your seat now with real events for real people.</p>
+      <h2 class="m-3 splash-text text-center">Get ahead of the Scalpers</h2>
+      <p class="m-3 splash-text text-center">Reserve your seat now with real events for real people.</p>
     </div>
   </section>
   <section class="row m-3 elevation-3 text-center nav-links justify-content-between align-items-center">
@@ -133,7 +133,9 @@ export default {
   }
 
   .splash-text{
-    color: #79E7AB;
+    color: #CCF3FD;
+    background-color: #2A2D3A;
+    padding: 1rem;
   }
 
   h3 {
