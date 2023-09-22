@@ -26,10 +26,11 @@
         </div>
         <div class="col-12 text-center justify-content-center mb-3">
           <h2 class="text-center">{{ event.capacity - event.ticketCount }} Spots Remaining!</h2>
-            <div v-if="!event.capacity == event.ticketCount"> <h2>Event is full</h2>  
-            </div>
-            <button v-else-if="!isAttending" @click="createTicket(event.id)"><b>Attend Event</b></button>
-            <button v-else @click="deleteTicketFromDetailsPage(event.id)"><b>Unattend Event</b></button>
+          <button v-if="isAttending" @click="deleteTicketFromDetailsPage(event.id)"><b>Unattend Event</b></button>  
+            <button v-else-if="!isAttending && event.capacity > event.ticketCount && user.isAuthenticated" @click="createTicket(event.id)"><b>Attend Event</b></button>
+            <div v-else-if="event.capacity == event.ticketCount"> <h2>Event is full</h2>  
+              </div>
+            
             
           
          
