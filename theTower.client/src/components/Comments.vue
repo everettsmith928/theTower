@@ -4,7 +4,7 @@
           <div v-if="account.name" class="col-12">
           <form @submit.prevent="createComment" class="row">
             <div class="col-12">
-              <input v-model="commentData.body" type="text" rows="3" class="form-control mt-3">
+              <input v-model="commentData.body" type="text" maxLength="100" rows="3" class="form-control mt-3">
             </div>
             <div class="col-12 d-flex align-items-center justify-content-end">
               <button type="submit" class="comment-button"><i class="mdi mdi-pen"></i></button>
