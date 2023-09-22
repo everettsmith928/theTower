@@ -1,7 +1,7 @@
 <template>
  <div class="col-12 text-center comments rounded">
         <section class="row">
-          <div class="col-12">
+          <div v-if="account.name" class="col-12">
           <form @submit.prevent="createComment" class="row">
             <div class="col-12">
               <input v-model="commentData.body" type="text" rows="3" class="form-control mt-3">
@@ -50,6 +50,7 @@ export default {
           commentData.value = {}
         } 
         return {
+            account: computed(() => AppState.account),
             userComments: computed(() => AppState.userComments),
             commentData,
             async createComment() {

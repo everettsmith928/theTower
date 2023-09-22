@@ -22,7 +22,7 @@
             </div>
             <div class="col-12 col-md-6 mb-3">
               <label for="event-capacity" class="form-label">Event Capacity</label>
-              <input v-model="formData.capacity" type="number" class="form-control" max="100000" id="eventCapacity" required>
+              <input v-model="formData.capacity" type="number" class="form-control" min="1" max="100000" id="eventCapacity" required>
               <div id="capacity-help" class="form-text">Maximum amount of Attendees</div>
             </div>
             <div class="col-12 mb-3 w-100">
@@ -59,21 +59,24 @@ import { eventsService } from "../services/EventsService";
 import { Modal } from "bootstrap";
 import { router } from "../router";
 import { useRouter } from "vue-router";
+import { logger } from "../utils/Logger";
 export default {
     
   setup(){
     const formData = ref({})
     const router = useRouter()
+    const today = new Date()
     function resetForm() {
       formData.value = {}
     }
     onMounted(() => resetForm())
   return { 
     formData,
+    today,
     async createEvent() {
       try {
         let newEvent = await eventsService.createEvent(formData.value)
-        console.log(newEvent)
+          logger.log(newEvent)
         Pop.success('Your event was created!')
         resetForm()
         Modal.getOrCreateInstance('#createModal').hide()

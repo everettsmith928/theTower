@@ -42,7 +42,7 @@
     </div>
   </section>
   <section v-if="event" class="row m-3">
-    <div v-if="event.creatorId == account.id" class="col-12 d-flex justify-content-end">
+    <div v-if="event.creatorId == account.id && activeEvent.isCanceled == false" class="col-12 d-flex justify-content-end">
       <button class="btn btn-danger" @click="cancelEvent()">Cancel Event</button>
     </div>
   </section>

@@ -7,7 +7,7 @@
     </div>
     <div class="mb-3 col-12 col-md-6">
       <label for="event-date" class="form-label">Event Date</label>
-      <input v-model="formData.startDate" type="date" class="form-control" id="dateInput" required>
+      <input value="04-04-2222" type="date" class="form-control" id="dateInput" required>
       <div id="startDate-help" class="form-text">This is the date your event starts</div>
     </div>
     <div class="col-12 col-md-6 mb-3">
@@ -22,7 +22,7 @@
     </div>
     <div class="col-12 col-md-6 mb-3">
       <label for="event-capacity" class="form-label">Event Capacity</label>
-      <input v-model="formData.capacity" type="number" class="form-control" max="100000" id="eventCapacity" required>
+      <input v-model="formData.capacity" type="number" class="form-control" min="1" max="100000" id="eventCapacity" required>
       <div id="capacity-help" class="form-text">Maximum amount of Attendees</div>
     </div>
     <div class="col-12 mb-3 w-100">
@@ -66,6 +66,7 @@ export default {
   setup() {
     const formData = ref({
     })
+    const today = new Date()
     const route = useRoute()
     function resetForm() {
       formData.value = {}
@@ -75,7 +76,7 @@ export default {
       if(AppState.activeEvent){
         formData.value = {
           name: AppState.activeEvent.name,
-          // startDate: AppState.activeEvent.startDate,
+          startDate: AppState.activeEvent.startDate,
           coverImg: AppState.activeEvent.coverImg,
           location: AppState.activeEvent.location,
           description: AppState.activeEvent.description,
@@ -91,6 +92,7 @@ export default {
     setForm()
     })
     return {
+      today,
       route,
       activeEvent: computed(() => AppState.activeEvent),
       formData,
