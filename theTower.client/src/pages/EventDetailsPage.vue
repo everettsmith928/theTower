@@ -136,8 +136,8 @@ export default {
           if (await Pop.confirm(`Are you sure you want to unattend this event?`)) {
             await ticketsService.deleteTicketFromDetailsPage(this.isAttending.id)
             this.event.capacity++
+            Pop.toast(`You unattended the event!`)
           }
-          Pop.toast(`You unattended the event!`)
         } catch (error) {
           Pop.error(error)
         }
